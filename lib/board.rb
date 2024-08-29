@@ -3,12 +3,12 @@
 # Board holds info about the token positions on the board grid.
 # It has methods to detect if full, if winner, to print, and to update the board.
 class Board
-  def initialize
-    @board = Array.new(3) { Array.new(3, ' ') }
-  end
+  BOARD_LENGTH = 3
 
-  def add(token, row, col)
-    @board[row][col] = token
+  attr_accessor :board
+
+  def initialize
+    @board = Array.new(BOARD_LENGTH) { Array.new(BOARD_LENGTH, ' ') }
   end
 
   def winner?
@@ -27,7 +27,7 @@ class Board
   private
 
   def row(row_num)
-    " #{@board[row_num][0]} | #{@board[row_num][1]} | #{@board[row_num][2]} "
+    " #{@board.dig(row_num, 0)} | #{@board.dig(row_num, 1)} | #{@board.dig(row_num, 2)} "
   end
 
   def win_rows?(board)
@@ -40,7 +40,7 @@ class Board
   end
 
   def win_diag?(start_col, end_col)
-    diag = [@board[0][start_col], @board[1][1], @board[2][end_col]]
+    diag = [@board.dig(0, start_col), @board.dig(1, 1), @board.dig(2, end_col)]
     diag.all?('X') || diag.all?('O')
   end
 end
