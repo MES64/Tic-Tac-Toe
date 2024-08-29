@@ -4,12 +4,16 @@ require_relative 'lib/board'
 require_relative 'lib/game'
 
 board = Board.new
-puts board
 
-puts ''
-board.add('X', 1, 2)
 puts board
+puts board.full?
+puts ''
 
-puts ''
-board.add('O', 2, 0)
-puts board
+(0..2).each do |row|
+  (0..2).each do |col|
+    board.add('X', row, col)
+    puts board
+    puts board.full?
+    puts ''
+  end
+end
