@@ -16,7 +16,7 @@ class Board
   end
 
   def to_s
-    "#{row(0)}\n-----------\n#{row(1)}\n-----------\n#{row(2)}"
+    "#{row(0)}\n---+---+---\n#{row(1)}\n---+---+---\n#{row(2)}"
   end
 
   private
