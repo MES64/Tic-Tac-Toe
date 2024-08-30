@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Board holds info about the token positions on the board grid.
-# It has methods to detect if full, if winner, to print, and to update the board.
+# It has methods to detect if full, to_s, and to update the board.
 class Board
   BOARD_LENGTH = 3
 
@@ -9,6 +9,10 @@ class Board
 
   def initialize
     @board = Array.new(BOARD_LENGTH) { Array.new(BOARD_LENGTH, ' ') }
+  end
+
+  def full?
+    @board.flatten.none?(' ')
   end
 
   def to_s
