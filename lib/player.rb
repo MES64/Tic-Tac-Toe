@@ -19,7 +19,7 @@ class Player
   private
 
   def choose_coord(row_or_col)
-    puts "Player #{@player_turn}, choose from #{row_or_col} 1, 2, 3:"
+    puts "Player #{@token}, choose from #{row_or_col} 1, 2, 3:"
     coord = 0
     coord = gets.chomp.to_i until (1..Board::BOARD_LENGTH).include?(coord)
     coord - 1
