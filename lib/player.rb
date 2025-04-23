@@ -5,16 +5,39 @@ require_relative 'board'
 # Player holds info about the player token
 # It has methods for placing a token on the board and checking if they have won
 class Player
-  attr_reader :token
+  attr_accessor :token
 
   def initialize(token)
     @token = token
   end
 
-  def place_token(board)
-    coords = [Board::BOARD_LENGTH, Board::BOARD_LENGTH] # Set coords so that first 'until' passes
-    coords = [choose_coord('row'), choose_coord('column')] until board.dig(coords[0], coords[1]) == ' '
-    board[coords[0]][coords[1]] = @token
+  def make_move(board)
+    coords = input_coords(board)
+    place_token(coords, board)
+  end
+
+  def input_coords(board)
+    loop do
+      puts "Player #{@token}, choose the square to place your token"
+      coords = [choose_coord('row'), choose_coord('column')]
+      return coords if board.at(coords) == ' '
+
+      puts 'Invalid Input: A token already exists there'
+    end
+  end
+
+  def choose_coord(row_or_col)
+    loop do
+      puts "Choose from #{row_or_col} 1, 2, 3:"
+      coord = gets.chomp
+      return coord.to_i - 1 if coord.match?(/^[1-3]$/)
+
+      puts 'Invalid Input: The coordinate must be from 1, 2, or 3'
+    end
+  end
+
+  def place_token(coords, board)
+    board.place_token(token, coords)
   end
 
   def winner?(board)
@@ -23,13 +46,6 @@ class Player
   end
 
   private
-
-  def choose_coord(row_or_col)
-    puts "Player #{@token}, choose from #{row_or_col} 1, 2, 3:"
-    coord = 0
-    coord = gets.chomp.to_i until (1..Board::BOARD_LENGTH).include?(coord)
-    coord - 1
-  end
 
   def win_rows?(board)
     board.each { |row| return true if row.all?(@token) }

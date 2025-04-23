@@ -11,17 +11,25 @@ class Board
     @board = Array.new(BOARD_LENGTH) { Array.new(BOARD_LENGTH, ' ') }
   end
 
-  def full?
-    @board.flatten.none?(' ')
+  def at(coords)
+    board.dig(coords[0], coords[1])
   end
 
-  def to_s
-    "#{row(0)}\n---+---+---\n#{row(1)}\n---+---+---\n#{row(2)}"
+  def place_token(token, coords)
+    board[coords[0]][coords[1]] = token
+  end
+
+  def full?
+    board.flatten.none?(' ')
+  end
+
+  def print
+    puts "#{row(0)}\n---+---+---\n#{row(1)}\n---+---+---\n#{row(2)}"
   end
 
   private
 
   def row(row_num)
-    " #{@board.dig(row_num, 0)} | #{@board.dig(row_num, 1)} | #{@board.dig(row_num, 2)} "
+    " #{board.dig(row_num, 0)} | #{board.dig(row_num, 1)} | #{board.dig(row_num, 2)} "
   end
 end
