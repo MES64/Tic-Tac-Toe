@@ -7,8 +7,8 @@ class Board
 
   attr_accessor :board
 
-  def initialize
-    @board = Array.new(BOARD_LENGTH) { Array.new(BOARD_LENGTH, ' ') }
+  def initialize(board = Array.new(BOARD_LENGTH) { Array.new(BOARD_LENGTH, ' ') })
+    @board = board
   end
 
   def at(coords)
