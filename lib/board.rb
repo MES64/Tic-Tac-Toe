@@ -12,6 +12,8 @@ class Board
   end
 
   def at(coords)
+    return if coords.any?(&:negative?)
+
     board.dig(coords[0], coords[1])
   end
 
