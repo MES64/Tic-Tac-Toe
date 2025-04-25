@@ -18,6 +18,8 @@ class Board
   end
 
   def place_token(token, coords)
+    return unless coords.all? { |coord| (0...BOARD_LENGTH).include?(coord) }
+
     board[coords[0]][coords[1]] = token
   end
 
