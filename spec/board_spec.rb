@@ -162,4 +162,47 @@ RSpec.describe Board do
       end
     end
   end
+
+  describe '#full?' do
+    # Incoming Query Message -> Test the return value
+
+    context 'when the board is empty' do
+      let(:board_empty) do
+        [[' ', ' ', ' '],
+         [' ', ' ', ' '],
+         [' ', ' ', ' ']]
+      end
+      subject(:board_full_empty) { described_class.new(board_empty) }
+
+      it 'returns false' do
+        expect(board_full_empty).to_not be_full
+      end
+    end
+
+    context 'when the board has some tokens on but is not full' do
+      let(:board) do
+        [['X', ' ', 'O'],
+         [' ', ' ', 'X'],
+         ['O', 'X', 'O']]
+      end
+      subject(:board_full_half) { described_class.new(board) }
+
+      it 'returns false' do
+        expect(board_full_half).to_not be_full
+      end
+    end
+
+    context 'when the board is full of tokens' do
+      let(:board_full) do
+        [%w[X X O],
+         %w[O X X],
+         %w[O X O]]
+      end
+      subject(:board_full_complete) { described_class.new(board_full) }
+
+      it 'returns true' do
+        expect(board_full_complete).to be_full
+      end
+    end
+  end
 end
