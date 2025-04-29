@@ -26,17 +26,22 @@ class Game
   end
 
   def play_turn
-    make_move
-    check_game_over
+    current_player = find_current_player
+    make_move(current_player)
+    check_game_over(current_player)
     switch_player_turn
     print_board
   end
 
-  def make_move
+  def find_current_player
+    players[player_turn]
+  end
+
+  def make_move(current_player)
     current_player.make_move(board)
   end
 
-  def check_game_over
+  def check_game_over(current_player)
     # Only the player that has just moved can win the game
     return self.result = "Player #{current_player.token} has won the game!" if current_player.winner?(board.board)
 
@@ -49,11 +54,5 @@ class Game
 
   def print_board
     board.print
-  end
-
-  private
-
-  def current_player
-    players[player_turn]
   end
 end
