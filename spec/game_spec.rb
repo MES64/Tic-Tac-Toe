@@ -41,4 +41,25 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#find_current_player' do
+  end
+
+  describe '#make_move' do
+    # Located in Public Script Method #play_turn
+    # Outgoing Command Message -> Test that a message is sent
+    let(:board) { instance_double(Board) }
+    let(:player) { instance_double(Player) }
+    subject(:game_make_move) { described_class.new(board:, players: [player, player]) }
+
+    before do
+      allow(game_make_move).to receive(:board).and_return(board)
+      allow(player).to receive(:make_move)
+    end
+
+    it 'sends make_move message to player' do
+      expect(player).to receive(:make_move).with(board).once
+      game_make_move.make_move(player)
+    end
+  end
 end
