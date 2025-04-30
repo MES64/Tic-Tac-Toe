@@ -43,6 +43,29 @@ RSpec.describe Game do
   end
 
   describe '#find_current_player' do
+    # Located in Public Script Method #play_turn
+    # Incoming Query Message -> Test return value
+    let(:board) { instance_double(Board) }
+    let(:player_X) { instance_double(Player) }
+    let(:player_O) { instance_double(Player) }
+
+    context 'when it is player X turn' do
+      subject(:game_current_X) { described_class.new(board:, players: [player_X, player_O], player_turn: 0) }
+
+      it 'returns player X' do
+        current_player = game_current_X.find_current_player
+        expect(current_player).to be(player_X)
+      end
+    end
+
+    context 'when it is player O turn' do
+      subject(:game_current_O) { described_class.new(board:, players: [player_X, player_O], player_turn: 1) }
+
+      it 'returns player O' do
+        current_player = game_current_O.find_current_player
+        expect(current_player).to be(player_O)
+      end
+    end
   end
 
   describe '#make_move' do
