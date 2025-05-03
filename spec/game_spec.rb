@@ -167,4 +167,31 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#switch_player_turn' do
+    # Located in Public Script Method #play_turn
+    # Incoming Command Message -> Test the change in the observable state
+    let(:board) { instance_double(Board) }
+    let(:player) { instance_double(Player) }
+
+    context 'when player_turn = 0' do
+      subject(:game_player_turn0) { described_class.new(board:, players: [player, player], player_turn: 0) }
+
+      it 'sets player_turn = 1' do
+        game_player_turn0.switch_player_turn
+        player_turn = game_player_turn0.player_turn
+        expect(player_turn).to eql(1)
+      end
+    end
+
+    context 'when player_turn = 1' do
+      subject(:game_player_turn1) { described_class.new(board:, players: [player, player], player_turn: 1) }
+
+      it 'sets player_turn = 0' do
+        game_player_turn1.switch_player_turn
+        player_turn = game_player_turn1.player_turn
+        expect(player_turn).to eql(0)
+      end
+    end
+  end
 end
