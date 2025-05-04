@@ -194,4 +194,22 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#print_board' do
+    # Located in Public Script Methods #play and #play_turn
+    # Outgoing Command Message -> Test that a message is sent
+    # My opinion is that by sending a message to board some side effect in the application
+    # occurs, which is that the board is printed to the terminal (even though it is puts which
+    # we do not test according to TOP)
+    let(:board) { instance_double(Board) }
+    let(:player) { instance_double(Player) }
+    subject(:game_print) { described_class.new(board:, players: [player, player]) }
+
+    before { allow(board).to receive(:print) }
+
+    it 'sends the print message to board' do
+      expect(board).to receive(:print).once
+      game_print.print_board
+    end
+  end
 end
