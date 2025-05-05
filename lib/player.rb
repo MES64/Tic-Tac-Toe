@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'board'
-
 # Player holds info about the player token
 # It has methods for placing a token on the board and checking if they have won
 class Player
