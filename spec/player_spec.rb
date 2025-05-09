@@ -85,4 +85,60 @@ RSpec.describe Player do
       end
     end
   end
+
+  describe '#valid_coord?' do
+    # Located in Looping Script Method #choose_coord
+    # Incoming Query Message -> Test the return value
+    subject(:player_valid) { described_class.new('X') }
+
+    it 'returns false for empty string' do
+      is_valid_coord = player_valid.valid_coord? ''
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns false for space' do
+      is_valid_coord = player_valid.valid_coord? ' '
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns false for non-numeric p' do
+      is_valid_coord = player_valid.valid_coord? 'p'
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns false for mixture 1a' do
+      is_valid_coord = player_valid.valid_coord? '1a'
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns false for negative -1' do
+      is_valid_coord = player_valid.valid_coord? '-1'
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns false for below valid range 0' do
+      is_valid_coord = player_valid.valid_coord? '0'
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns false for above valid range 4' do
+      is_valid_coord = player_valid.valid_coord? '4'
+      expect(is_valid_coord).to be false
+    end
+
+    it 'returns true for in valid range 1' do
+      is_valid_coord = player_valid.valid_coord? '1'
+      expect(is_valid_coord).to be true
+    end
+
+    it 'returns true for in valid range 2' do
+      is_valid_coord = player_valid.valid_coord? '2'
+      expect(is_valid_coord).to be true
+    end
+
+    it 'returns true for in valid range 3' do
+      is_valid_coord = player_valid.valid_coord? '3'
+      expect(is_valid_coord).to be true
+    end
+  end
 end
