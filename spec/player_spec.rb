@@ -46,4 +46,43 @@ RSpec.describe Player do
       end
     end
   end
+
+  describe '#choose_coord' do
+    # Located in Looping Script Method #input_coords
+    # Looping Script Method -> Test its behavior
+    subject(:player_choose) { described_class.new('X') }
+
+    before do
+      allow(player_choose).to receive(:puts)
+      allow(player_choose).to receive(:gets).and_return('')
+      allow(player_choose).to receive(:convert_to_zero_base)
+    end
+
+    context 'when the user input is valid' do
+      before { allow(player_choose).to receive(:valid_coord?).and_return(true) }
+
+      it 'does not display the error message' do
+        expect(player_choose).to_not receive(:puts).with('Invalid Input: The coordinate must be from 1, 2, or 3')
+        player_choose.choose_coord('row')
+      end
+    end
+
+    context 'when the user input is invalid, then valid' do
+      before { allow(player_choose).to receive(:valid_coord?).and_return(false, true) }
+
+      it 'displays the error message exactly once' do
+        expect(player_choose).to receive(:puts).with('Invalid Input: The coordinate must be from 1, 2, or 3').once
+        player_choose.choose_coord('row')
+      end
+    end
+
+    context 'when the user input is invalid 3 times in a row, then valid' do
+      before { allow(player_choose).to receive(:valid_coord?).and_return(false, false, false, true) }
+
+      it 'displays the error message exactly 3 times' do
+        expect(player_choose).to receive(:puts).with('Invalid Input: The coordinate must be from 1, 2, or 3').exactly(3).times
+        player_choose.choose_coord('row')
+      end
+    end
+  end
 end
