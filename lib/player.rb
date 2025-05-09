@@ -28,10 +28,18 @@ class Player
     loop do
       puts "Choose from #{row_or_col} 1, 2, 3:"
       coord = gets.chomp
-      return coord.to_i - 1 if coord.match?(/^[1-3]$/)
+      return convert_to_zero_base(coord) if valid_coord?(coord)
 
       puts 'Invalid Input: The coordinate must be from 1, 2, or 3'
     end
+  end
+
+  def valid_coord?(coord)
+    coord.match?(/^[1-3]$/)
+  end
+
+  def convert_to_zero_base(coord)
+    coord.to_i - 1
   end
 
   def place_token(coords, board)
