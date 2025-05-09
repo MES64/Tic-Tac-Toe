@@ -39,6 +39,9 @@ class Player
   end
 
   def convert_to_zero_base(coord)
+    return unless coord.match?(/^\d+$/)
+    return if coord.to_i.zero?
+
     coord.to_i - 1
   end
 
