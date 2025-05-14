@@ -141,4 +141,65 @@ RSpec.describe Player do
       expect(is_valid_coord).to be true
     end
   end
+
+  describe '#convert_to_zero_base' do
+    # Located in Looping Script Method #choose_coord
+    # Incoming Query Message -> Test return value
+    subject(:player_convert) { described_class.new('X') }
+
+    it 'returns nil from empty string' do
+      result = player_convert.convert_to_zero_base('')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil from string space' do
+      result = player_convert.convert_to_zero_base(' ')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil from non-numeric string p' do
+      result = player_convert.convert_to_zero_base('p')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil from mixture string 1a' do
+      result = player_convert.convert_to_zero_base('1a')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil from space-number string " "1' do
+      result = player_convert.convert_to_zero_base(' 1')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil from negative string -1' do
+      result = player_convert.convert_to_zero_base('-1')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil from zero string 00' do
+      result = player_convert.convert_to_zero_base('00')
+      expect(result).to be_nil
+    end
+
+    it 'returns integer 0 from string 1' do
+      result = player_convert.convert_to_zero_base('1')
+      expect(result).to eql(0)
+    end
+
+    it 'returns integer 1 from string 02' do
+      result = player_convert.convert_to_zero_base('02')
+      expect(result).to eql(1)
+    end
+
+    it 'returns integer 2 from string 3' do
+      result = player_convert.convert_to_zero_base('3')
+      expect(result).to eql(2)
+    end
+
+    it 'returns integer 99 from string 100' do
+      result = player_convert.convert_to_zero_base('100')
+      expect(result).to eql(99)
+    end
+  end
 end
