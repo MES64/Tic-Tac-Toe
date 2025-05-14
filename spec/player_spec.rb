@@ -202,4 +202,18 @@ RSpec.describe Player do
       expect(result).to eql(99)
     end
   end
+
+  describe '#place_token' do
+    # Located in Public Script Method #make_move
+    # Outgoing Command Message -> Test that the message is sent
+    subject(:player_place) { described_class.new('X') }
+    let(:board) { instance_double(Board) }
+
+    before { allow(board).to receive(:place_token) }
+
+    it 'sends place_token message to board' do
+      expect(board).to receive(:place_token).with('X', [0, 1])
+      player_place.place_token([0, 1], board)
+    end
+  end
 end
