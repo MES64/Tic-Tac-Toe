@@ -16,7 +16,7 @@ class Player
 
   def input_coords(board)
     loop do
-      puts "Player #{@token}, choose the square to place your token"
+      puts "Player #{token}, choose the square to place your token"
       coords = [choose_coord('row'), choose_coord('column')]
       return coords if board.at(coords) == ' '
 
@@ -57,7 +57,7 @@ class Player
   private
 
   def win_rows?(board)
-    board.each { |row| return true if row.all?(@token) }
+    board.each { |row| return true if row.all?(token) }
     false
   end
 
@@ -67,6 +67,6 @@ class Player
 
   def win_diag?(board, start_col, end_col)
     diag = [board.dig(0, start_col), board.dig(1, 1), board.dig(2, end_col)]
-    diag.all?(@token)
+    diag.all?(token)
   end
 end
