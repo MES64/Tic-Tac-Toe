@@ -216,4 +216,143 @@ RSpec.describe Player do
       player_place.place_token([0, 1], board)
     end
   end
+
+  describe '#winner?' do
+    # Part of Public Interface
+    # Incoming Query Message -> Test return value
+
+    context 'when the player uses an X token' do
+      subject(:player_winner_X) { described_class.new('X') }
+
+      it 'returns false for empty board' do
+        board = [[' ', ' ', ' '],
+                 [' ', ' ', ' '],
+                 [' ', ' ', ' ']]
+        expect(player_winner_X).to_not be_winner(board)
+      end
+
+      it 'returns false for non-empty and non-full board with no winner' do
+        board = [['X', ' ', ' '],
+                 [' ', 'O', 'O'],
+                 [' ', ' ', 'X']]
+        expect(player_winner_X).to_not be_winner(board)
+      end
+
+      it 'returns false for full board with no winner' do
+        board = [%w[X O X],
+                 %w[O X O],
+                 %w[O X O]]
+        expect(player_winner_X).to_not be_winner(board)
+      end
+
+      it 'returns false for board where O is the winner' do
+        board = [['O', 'O', 'O'],
+                 [' ', 'X', ' '],
+                 ['X', ' ', 'X']]
+        expect(player_winner_X).to_not be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the top row' do
+        board = [['X', 'X', 'X'],
+                 [' ', 'O', ' '],
+                 ['O', ' ', ' ']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the middle row' do
+        board = [[' ', 'O', ' '],
+                 ['X', 'X', 'X'],
+                 [' ', ' ', 'O']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the bottom row' do
+        board = [[' ', 'O', ' '],
+                 [' ', 'O', ' '],
+                 ['X', 'X', 'X']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the left column' do
+        board = [['X', ' ', ' '],
+                 ['X', 'O', 'O'],
+                 ['X', ' ', ' ']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the middle column' do
+        board = [['O', 'X', ' '],
+                 [' ', 'X', ' '],
+                 [' ', 'X', 'O']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the right column' do
+        board = [['O', ' ', 'X'],
+                 [' ', ' ', 'X'],
+                 [' ', 'O', 'X']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the top-left to bottom-right diagonal' do
+        board = [['X', 'O', ' '],
+                 [' ', 'X', 'O'],
+                 [' ', ' ', 'X']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins along the bottom-left to top-right diagonal' do
+        board = [[' ', ' ', 'X'],
+                 [' ', 'X', ' '],
+                 ['X', 'O', 'O']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where X wins in 2 ways: along the top row and middle column' do
+        board = [%w[X X X],
+                 %w[O X O],
+                 %w[O X O]]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board where both X and O win' do
+        board = [['X', 'O', 'X'],
+                 ['X', 'O', ' '],
+                 ['X', 'O', ' ']]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board that is full and X wins along the top row' do
+        board = [%w[X X X],
+                 %w[O O X],
+                 %w[O X O]]
+        expect(player_winner_X).to be_winner(board)
+      end
+
+      it 'returns true for board that is full of only X tokens' do
+        board = [%w[X X X],
+                 %w[X X X],
+                 %w[X X X]]
+        expect(player_winner_X).to be_winner(board)
+      end
+    end
+
+    context 'when the player uses an O token' do
+      subject(:player_winner_O) { described_class.new('O') }
+
+      it 'returns false when O does not win' do
+        board = [[' ', 'O', 'X'],
+                 [' ', 'X', 'O'],
+                 ['X', ' ', ' ']]
+        expect(player_winner_O).to_not be_winner(board)
+      end
+
+      it 'returns true when O wins' do
+        board = [[' ', 'O', 'X'],
+                 [' ', 'O', 'X'],
+                 [' ', 'O', 'X']]
+        expect(player_winner_O).to be_winner(board)
+      end
+    end
+  end
 end
